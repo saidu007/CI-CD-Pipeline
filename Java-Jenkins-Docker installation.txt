@@ -1,0 +1,58 @@
+INSTALL JAVA AND JENKINS AND DOCKER
+===================================
+
+JAVA
+=======
+sudo apt update
+sudo apt install openjdk-8-jdk
+
+Add the Jenkins Debian repository.
+==========================
+Import the GPG keys of the Jenkins repository using the following wget command:
+wget -q -O - https://pkg.jenkins.io/debian/jenkins.io.key | sudo apt-key add -
+
+Next, add the Jenkins repository to the system with:
+sudo sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
+
+INSTALL JENKINS.
+===============
+Once the Jenkins repository is enabled, update the apt package list and install the latest version of Jenkins by typing:
+sudo apt update
+sudo apt install jenkins
+
+Jenkins service will automatically start after the installation process is complete. You can verify it by printing the service status:
+
+systemctl status jenkins
+
+Adjusting Firewall #
+==============
+sudo ufw allow 8080
+
+Verify the change with:
+sudo ufw status
+
+Setting Up Jenkins #
+================
+sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+
+SETTING UP DOCKER IN JENKINS SERVERS
+====================================
+install docker
+
+sudo apt-get update
+sudo apt install docker.io
+
+ADD JENKINS USER TO DOCKER GROUP
+==================================
+sudo usermod -aG docker jenkins 
+
+restart jenkins
+
+sudo systemctl restart jenkins 
+
+
+
+
+
+
+
