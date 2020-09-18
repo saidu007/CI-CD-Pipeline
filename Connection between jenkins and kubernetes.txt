@@ -1,0 +1,43 @@
+
+
+
+echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a
+/etc/apt/sources.list.d/kubernetes.list sudo apt-get update
+sudo apt-get install -y kubectl
+
+
+
+2.	Switch to jenkins user
+
+ sudo -i -u jenkins	
+
+3.	Create .kube folder in Jenkins home directory
+
+cd ~
+mkdir .kube
+
+4.	Create config file and copy config file content from Kubernetes Cluster master machine and save the content.
+
+vi .kube/config	
+
+5. We can use kubectl commands directly in pipe line script , kubectl commands will get executed in Kubernetes cluster directly.
+
+stage("Deploy To Kuberates Cluster"){
+sh "kubectl apply -f springBootMongo.yml"
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+© 2019 all rights Reserved by Mithun Technologies	devopstrainingblr@gmail.com
+
