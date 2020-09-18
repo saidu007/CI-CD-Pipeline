@@ -27,17 +27,45 @@ sh "kubectl apply -f springBootMongo.yml"
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-© 2019 all rights Reserved by Mithun Technologies	devopstrainingblr@gmail.com
+====================================================
+Jenkins Pipeline script for complete CI-CD
+==============================
+node{
+    
+    stage("Git Clone"){
+        git credentialsId: 'GIT_CREDENTIALS', url: 'https://github.com/saidu007/mithun_spring-boot-mongo-docker.git'
+        
+    }
+    stage("Maven Clean Build"){
+        
+        def mavenHome = tool name: "Maven-3.6.3", type: "maven"
+        def mavenCMD= "${mavenHome}/bin/mvn "
+        sh "${mavenCMD} clean package"
+        
+    }
+    
+    stage("Build docker image"){
+        sh "docker build -t saidu007/spring-boot-mongo ."
+    }
+    
+    stage("Docker Push"){
+        
+          
+          sh "docker login -u saidu007 -p !Siddukala2015 "
+        
+            sh "docker push saidu007/spring-boot-mongo "
+    }
+    /**
+    stage("Deploy Application in k8s Cluster"){
+        kubernetesDeploy(
+            configs: 'springBootMongo.yml',
+            kubeconfigId: 'KUBERNETES_CLUSTER_CONFIG',
+            enableConfigSubstitution: true
+            )
+    }
+    **/
+    stage("Deploy to kubernetes cluster"){
+        sh 'kubectl apply -f springBootMongo.yml'
+    }
+}
 
